@@ -1,0 +1,320 @@
+First we load the data into our variable 
+
+
+mydata <- read.csv(file = "/home/nayak_pratheek17/Downloads/archive/water_potability.csv", sep = ",", header = TRUE)
+
+Scatter plot for our data frame
+
+
+library(ggplot2)
+
+ggplot(mydata, aes(x = ph, y = Hardness)) + geom_point()
+
+Creating a line graph using plot(): solids v Chloramines
+```{r}
+plot(x = mydata$Solids, y = mydata$Chloramines, col = "red", type = "l")
+```
+
+Using ggplot():
+```{r}
+ggplot(data = NULL, aes(x = mydata$Solids, y = mydata$Chloramines)) + geom_line()
+```
+
+Bar Graph:
+```{r}
+barplot(mydata$ph)
+```
+Since the data set is long each bar will look like a line.. but if we zoom in it is a bar
+
+so we will use a part of data
+```{r}
+barplot(mydata$ph[1:24])
+```
+
+Histogram:
+
+```{r}
+hist(mydata$ph[1:24])
+```
+
+
+BOX PLOT:
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$ph)) + geom_boxplot()
+```
+
+multiple box plot:
+
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$ph)) + geom_boxplot() + facet_grid(mydata$Potability~.)
+```
+
+
+Line graph using geom_line():
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$Sulfate[1:24], y = mydata$Conductivity[1:24])) + geom_line(colour = "blue")
+```
+
+
+Adding points to the same above line graph
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$Sulfate[1:24], y = mydata$Conductivity[1:24])) + geom_line(colour = "blue") + geom_point()
+```
+
+Multiple line graphs:
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$Sulfate[1:24], y = mydata$Conductivity[1:24])) + geom_line(colour = "blue") + geom_point() + facet_grid(mydata$Potability ~.)
+```
+
+
+Scatter plot based on Potability:
+```{r} 
+ggplot(data = NULL, aes(x = mydata$ph, y = mydata$Hardness), shape = mydata$Potability) + geom_point(size = 0.1)
+```
+
+
+Adding gradience:
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$ph, y = mydata$Solids, fill = mydata$Sulfate)) +
+ geom_point(shape = 21, size = 1.5) +
+ scale_fill_gradient(
+ low = "black", high = "white",
+ breaks = seq(70, 170, by = 20),
+ guide = guide_legend()
+ )
+```Creating a line graph using plot(): solids v Chloramines
+```{r}
+plot(x = mydata$Solids, y = mydata$Chloramines, col = "red", type = "l")
+```
+
+Using ggplot():
+```{r}
+ggplot(data = NULL, aes(x = mydata$Solids, y = mydata$Chloramines)) + geom_line()
+```
+
+Bar Graph:
+```{r}
+barplot(mydata$ph)
+```
+Since the data set is long each bar will look like a line.. but if we zoom in it is a bar
+
+so we will use a part of data
+```{r}
+barplot(mydata$ph[1:24])
+```
+
+Histogram:
+
+```{r}
+hist(mydata$ph[1:24])
+```
+
+
+BOX PLOT:
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$ph)) + geom_boxplot()
+```
+
+multiple box plot:
+
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$ph)) + geom_boxplot() + facet_grid(mydata$Potability~.)
+```
+
+
+Line graph using geom_line():
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$Sulfate[1:24], y = mydata$Conductivity[1:24])) + geom_line(colour = "blue")
+```
+
+
+Adding points to the same above line graph
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$Sulfate[1:24], y = mydata$Conductivity[1:24])) + geom_line(colour = "blue") + geom_point()
+```
+
+Multiple line graphs:
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$Sulfate[1:24], y = mydata$Conductivity[1:24])) + geom_line(colour = "blue") + geom_point() + facet_grid(mydata$Potability ~.)
+```
+
+
+Scatter plot based on Potability:
+```{r} 
+ggplot(data = NULL, aes(x = mydata$ph, y = mydata$Hardness), shape = mydata$Potability) + geom_point(size = 0.1)
+```
+
+
+Adding gradience:
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$ph, y = mydata$Solids, fill = mydata$Sulfate)) +
+ geom_point(shape = 21, size = 1.5) +
+ scale_fill_gradient(
+ low = "black", high = "white",
+ breaks = seq(70, 170, by = 20),
+ guide = guide_legend()
+ )
+```
+
+Histograms:
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$Conductivity)) + geom_histogram(binwidth = 2, fill = "white", colour = "black")
+```
+
+Same with other color:
+
+```{r}
+ggplot(data = NULL, aes(x = mydata$Conductivity)) + geom_histogram(binwidth = 2, fill = "yellow", colour = "black")
+```
+
+Multiple histogram according to Potability:
+
+ggplot(data = NULL, aes(x = mydata$Conductivity)) + geom_histogram(binwidth = 2, fill = "white", colour = "black") + facet_grid(mydata$Potability ~.)
+
+
+Denisty graph:
+
+
+ggplot(data = NULL, aes(x = mydata$Organic_carbon)) + geom_density()
+
+
+Multiple density graphs based on adjustment
+
+ggplot(data = NULL, aes(x = mydata$Organic_carbon)) +
+ geom_line(stat = "density") +
+ geom_line(stat = "density", adjust = .25, colour = "red") +
+ geom_line(stat = "density", adjust = 2, colour = "blue")
+
+
+
+ggplot(data = NULL, aes(x = mydata$Organic_carbon)) + geom_density(fill = "blue", alpha = 0.4)
+
+
+
+density on top of histogram:
+
+
+ggplot(data = NULL, aes(x = mydata$Hardness, y = ..density..)) +
+ geom_histogram(fill = "cornsilk", colour = "grey60", size = .2) +
+ geom_density() +
+ xlim(35, 105)
+
+
+Based on Potablity:
+
+
+ggplot(data = NULL, aes(x = mydata$Hardness, y = ..density..)) +
+ geom_histogram(fill = "cornsilk", colour = "grey60", size = .2) +
+ geom_density() +
+ xlim(35, 105) + facet_grid(mydata$Potability ~.)
+
+
+Frequency polygon:
+
+ggplot(data = NULL, aes(x = mydata$Sulfate)) + geom_freqpoly()
+
+
+Making a violin plot:
+
+ggplot(data = NULL, aes(x = mydata$ph[1:24], y = mydata$Solids[1:24])) + geom_violin()
+
+
+
+Dot PLOT:
+ggplot(data = NULL, aes(x = mydata$ph)) + geom_dotplot()
+
+
+
+
+
+stat2dDensity graph:
+
+
+ggplot(data = NULL, aes(x = mydata$ph, y = mydata$Sulfate)) + geom_point() +
+ stat_density2d()
+
+
+
+
+Histograms:
+ggplot(data = NULL, aes(x = mydata$Conductivity)) + geom_histogram(binwidth = 2, fill = "white", colour = "black")
+
+
+Same with other color:
+
+ggplot(data = NULL, aes(x = mydata$Conductivity)) + geom_histogram(binwidth = 2, fill = "yellow", colour = "black")
+
+
+Multiple histogram according to Potability:
+
+ggplot(data = NULL, aes(x = mydata$Conductivity)) + geom_histogram(binwidth = 2, fill = "white", colour = "black") + facet_grid(mydata$Potability ~.)
+
+
+Denisty graph:
+
+ggplot(data = NULL, aes(x = mydata$Organic_carbon)) + geom_density()
+
+
+Multiple density graphs based on adjustment
+
+ggplot(data = NULL, aes(x = mydata$Organic_carbon)) +
+ geom_line(stat = "density") +
+ geom_line(stat = "density", adjust = .25, colour = "red") +
+ geom_line(stat = "density", adjust = 2, colour = "blue")
+
+
+
+ggplot(data = NULL, aes(x = mydata$Organic_carbon)) + geom_density(fill = "blue", alpha = 0.4)
+
+
+
+density on top of histogram:
+
+ggplot(data = NULL, aes(x = mydata$Hardness, y = ..density..)) +
+ geom_histogram(fill = "cornsilk", colour = "grey60", size = .2) +
+ geom_density() +
+ xlim(35, 105)
+
+
+Based on Potablity:
+
+ggplot(data = NULL, aes(x = mydata$Hardness, y = ..density..)) +
+ geom_histogram(fill = "cornsilk", colour = "grey60", size = .2) +
+ geom_density() +
+ xlim(35, 105) + facet_grid(mydata$Potability ~.)
+
+Frequency polygon:
+
+ggplot(data = NULL, aes(x = mydata$Sulfate)) + geom_freqpoly()
+
+
+Making a violin plot:
+
+ggplot(data = NULL, aes(x = mydata$ph[1:24], y = mydata$Solids[1:24])) + geom_violin()
+
+
+Dot PLOT:
+
+ggplot(data = NULL, aes(x = mydata$ph)) + geom_dotplot()
+
+
+stat2dDensity graph:
+
+ggplot(data = NULL, aes(x = mydata$ph, y = mydata$Sulfate)) + geom_point() +
+ stat_density2d()
+
+
+
